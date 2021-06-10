@@ -9,8 +9,8 @@ function App() {
   return (
     <div>
       <AppBar />
-      {/* <HomePage /> */}
-      <AddRecord />
+      <HomePage />
+      {/* <AddRecord /> */}
     </div>
   );
 }
