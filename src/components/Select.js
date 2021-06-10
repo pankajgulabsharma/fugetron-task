@@ -18,12 +18,7 @@ const Select = ({ label, name, value, onChange, menuData }) => {
   return (
     <FormControl variant="outlined" className={classes.root}>
       <InputLabel>{label}</InputLabel>
-      <SelectBase
-        label={label}
-        name={name}
-        value={value}
-        // onChange={handleChange}
-      >
+      <SelectBase label={label} name={name} value={value} onChange={onChange}>
         <MenuItem value="">
           <em>None</em>
         </MenuItem>

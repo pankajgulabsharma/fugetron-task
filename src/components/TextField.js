@@ -5,6 +5,7 @@ const TextField = ({
   label,
   name,
   value,
+  onChange,
   placeholder,
   variant,
   size,
@@ -13,12 +14,16 @@ const TextField = ({
   rows,
   required = false,
   type,
+  disabled,
+  error,
 }) => {
+  // console.log(error);
   return (
     <TextFieldBase
       label={label}
       name={name}
       value={value}
+      onChange={onChange}
       placeholder={placeholder}
       variant={variant}
       required={required}
@@ -27,6 +32,9 @@ const TextField = ({
       fullWidth={isFullWidth}
       multiline={multiline || false}
       rows={rows || undefined}
+      disabled={false || disabled}
+      error={false || Boolean(error)}
+      helperText={undefined || error}
     />
   );
 };
