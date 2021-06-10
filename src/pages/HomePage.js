@@ -5,6 +5,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import { Button, InputBase, Toolbar } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
+import { NavLink } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -71,9 +72,11 @@ const HomePage = () => {
   return (
     <div className={classes.root}>
       <Toolbar>
-        <Button startIcon={<AddIcon />} className={classes.addButton}>
-          Add record
-        </Button>
+        <NavLink exact to={"/addrecord"} style={{ textDecoration: "none" }}>
+          <Button startIcon={<AddIcon />} className={classes.addButton}>
+            Add record
+          </Button>
+        </NavLink>
         <div className={classes.search}>
           <div className={classes.searchIcon}>
             <SearchIcon />

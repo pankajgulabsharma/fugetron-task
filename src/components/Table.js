@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { NavLink } from "react-router-dom";
 
 const useStyle = makeStyles({
   header: {
@@ -52,20 +53,32 @@ const Table = ({ headerData, bodyData }) => {
                 <TableCell className={classes.body}>{city}</TableCell>
                 <TableCell className={classes.body}>{pincode}</TableCell>
                 <TableCell className={classes.body}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
+                  <NavLink
+                    exact
+                    to={`/editrecord/1`}
+                    style={{ textDecoration: "none" }}
                   >
-                    EDIT
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.button}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                    >
+                      EDIT
+                    </Button>
+                  </NavLink>
+                  <NavLink
+                    exact
+                    to={`/deleterecord/1`}
+                    style={{ textDecoration: "none" }}
                   >
-                    DELETE
-                  </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                    >
+                      DELETE
+                    </Button>
+                  </NavLink>
                 </TableCell>
               </TableRow>
             )
