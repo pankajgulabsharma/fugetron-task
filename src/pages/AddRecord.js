@@ -3,6 +3,7 @@ import TextField from "../components/TextField";
 import Select from "../components/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -58,13 +59,15 @@ const AddRecord = () => {
             >
               Add
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              className={classes.button}
-            >
-              Cancel
-            </Button>
+            <NavLink exact to="/" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+              >
+                Cancel
+              </Button>
+            </NavLink>
           </Grid>
         </Grid>
       </form>
