@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TextField from "../components/TextField";
 import Select from "../components/Select";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,6 +6,7 @@ import { Button, Grid } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -42,6 +43,8 @@ const initialState = {
 const AddRecord = () => {
   const [state, setState] = useState(initialState);
   const [error, setError] = useState({});
+
+  const { addUser } = useContext(GlobalContext);
   let history = useHistory();
   // console.log(state);
 
@@ -53,6 +56,7 @@ const AddRecord = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validation()) {
+      addUser(state);
       console.log("sucess");
       // alert(JSON.stringify(state));
       // await axios.post(
