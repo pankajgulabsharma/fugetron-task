@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import Select from "../components/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -39,10 +40,19 @@ const initialState = {
   pincode: "",
 };
 const EditRecord = () => {
+  const { users, editUser } = useContext(GlobalContext);
   const [state, setState] = useState(initialState);
   const [error, setError] = useState({});
   let history = useHistory();
+  const { id } = useParams();
   // console.log(state);
+
+  useEffect(() => {
+    console.log(`users`, users);
+    const selectedUser = users.find((user, index) => id === index + 1);
+    setState(selectedUser);
+    console.log("selectdUser", id, selectedUser);
+  }, [users, id]);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -52,26 +62,14 @@ const EditRecord = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validation()) {
+      editUser(state, id);
       console.log("sucess");
-      // alert(JSON.stringify(state));
-      // await axios.post(
-      //   "https://j5ej5u32gg.execute-api.us-east-1.amazonaws.com/v1/fetch",
-      //   state
-      // );
       history.push("/");
     }
   };
 
-  //function for email validation returns boolean
-  function validateEmail(email) {
-    const re =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
-
   const validation = () => {
     let temp = {};
-    console.log("hi");
 
     //pincode validation
     temp.pincode =

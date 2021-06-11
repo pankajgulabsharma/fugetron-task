@@ -1,4 +1,5 @@
-import React, { createContext } from "react";
+import React, { createContext, useReducer } from "react";
+import AppReducer from "./AppReducer";
 
 // const initialState = {
 //   firstName: "",
@@ -10,7 +11,24 @@ import React, { createContext } from "react";
 // };
 
 const initialState = {
-  users: [],
+  users: [
+    {
+      firstName: "firstName1",
+      lastName: "lastName1",
+      email: "email1",
+      selectState: "selectState1",
+      city: "city1",
+      pincode: "pincode1",
+    },
+    {
+      firstName: "firstName2",
+      lastName: "lastName2",
+      email: "email2",
+      selectState: "selectState2",
+      city: "city2",
+      pincode: "pincode2",
+    },
+  ],
 };
 export const GlobalContext = createContext(initialState);
 const GlobalState = ({ children }) => {
@@ -27,8 +45,8 @@ const GlobalState = ({ children }) => {
   };
 
   //edit user
-  const editUser = (user) => {
-    dispatch({ type: "EDIT_USER", payload: user });
+  const editUser = (updateduser, id) => {
+    dispatch({ type: "EDIT_USER", payload: updateduser });
   };
   return (
     <GlobalContext.Provider

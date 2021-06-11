@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import Table from "../components/Table.js";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Dialog,
@@ -13,6 +12,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState.js";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -57,23 +57,9 @@ const header = [
   "Action",
 ];
 const HomePage = () => {
-  const [getData, setGetData] = useState([]);
+  const { users } = useContext(GlobalContext);
   const [dialogOpen, setDialogOpen] = useState(false);
-  console.log(dialogOpen);
-  const fetchData = async () => {
-    try {
-      const { data } = await axios.get(
-        "https://j5ej5u32gg.execute-api.us-east-1.amazonaws.com/v1/fetch"
-      );
-      setGetData(data.data);
-    } catch (error) {
-      console.log("Error :", error.response.status);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // console.log(dialogOpen);
 
   const DialogBox = (
     <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
@@ -119,7 +105,7 @@ const HomePage = () => {
       </Toolbar>
       <Table
         headerData={header}
-        bodyData={getData}
+        bodyData={users}
         setDialogOpen={setDialogOpen}
       />
       {DialogBox}

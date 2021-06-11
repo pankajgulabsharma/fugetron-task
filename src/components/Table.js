@@ -41,21 +41,21 @@ const Table = ({ headerData, bodyData, setDialogOpen }) => {
         <TableBody>
           {bodyData.map(
             (
-              { first_name, last_name, email, states, city, pincode },
+              { firstName, lastName, email, selectState, city, pincode },
               index
             ) => (
-              <TableRow>
+              <TableRow key={index}>
                 <TableCell className={classes.body}>{index + 1}</TableCell>
-                <TableCell className={classes.body}>{first_name}</TableCell>
-                <TableCell className={classes.body}>{last_name}</TableCell>
+                <TableCell className={classes.body}>{firstName}</TableCell>
+                <TableCell className={classes.body}>{lastName}</TableCell>
                 <TableCell className={classes.body}>{email}</TableCell>
-                <TableCell className={classes.body}>{states}</TableCell>
+                <TableCell className={classes.body}>{selectState}</TableCell>
                 <TableCell className={classes.body}>{city}</TableCell>
                 <TableCell className={classes.body}>{pincode}</TableCell>
                 <TableCell className={classes.body}>
                   <NavLink
                     exact
-                    to={`/editrecord/1`}
+                    to={`/editrecord/${index + 1}`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button

@@ -57,12 +57,7 @@ const AddRecord = () => {
     e.preventDefault();
     if (validation()) {
       addUser(state);
-      console.log("sucess");
-      // alert(JSON.stringify(state));
-      // await axios.post(
-      //   "https://j5ej5u32gg.execute-api.us-east-1.amazonaws.com/v1/fetch",
-      //   state
-      // );
+      // console.log("sucess");
       history.push("/");
     }
   };
