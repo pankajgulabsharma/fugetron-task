@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Table from "../components/Table.js";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import { Button, InputBase, Toolbar } from "@material-ui/core";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  InputBase,
+  Toolbar,
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
@@ -51,13 +58,13 @@ const header = [
 ];
 const HomePage = () => {
   const [getData, setGetData] = useState([]);
-
+  const [dialogOpen, setDialogOpen] = useState(false);
+  console.log(dialogOpen);
   const fetchData = async () => {
     try {
       const { data } = await axios.get(
         "https://j5ej5u32gg.execute-api.us-east-1.amazonaws.com/v1/fetch"
       );
-      // console.log(data.data);
       setGetData(data.data);
     } catch (error) {
       console.log("Error :", error.response.status);
@@ -68,6 +75,25 @@ const HomePage = () => {
     fetchData();
   }, []);
 
+  const DialogBox = (
+    <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+      <DialogTitle>{"Are You Sure to Delete"}</DialogTitle>
+
+      <DialogActions>
+        <Button
+          variant="contained"
+          color="secondary"
+          // type="submit"
+          // className={classes.button}
+        >
+          Delete
+        </Button>
+        <Button variant="contained" color="primary">
+          Cancel
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
   const classes = useStyle();
   return (
     <div className={classes.root}>
@@ -91,7 +117,12 @@ const HomePage = () => {
           />
         </div>
       </Toolbar>
-      <Table headerData={header} bodyData={getData} />
+      <Table
+        headerData={header}
+        bodyData={getData}
+        setDialogOpen={setDialogOpen}
+      />
+      {DialogBox}
     </div>
   );
 };

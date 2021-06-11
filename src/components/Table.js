@@ -24,7 +24,7 @@ const useStyle = makeStyles({
     marginLeft: "10px",
   },
 });
-const Table = ({ headerData, bodyData }) => {
+const Table = ({ headerData, bodyData, setDialogOpen }) => {
   const classes = useStyle();
   return (
     <TableContainer>
@@ -66,19 +66,15 @@ const Table = ({ headerData, bodyData }) => {
                       EDIT
                     </Button>
                   </NavLink>
-                  <NavLink
-                    exact
-                    to={`/deleterecord/1`}
-                    style={{ textDecoration: "none" }}
+
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={() => setDialogOpen(true)}
                   >
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.button}
-                    >
-                      DELETE
-                    </Button>
-                  </NavLink>
+                    DELETE
+                  </Button>
                 </TableCell>
               </TableRow>
             )
