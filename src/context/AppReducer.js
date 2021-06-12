@@ -1,21 +1,23 @@
 const AppReducer = (state, { type, payload }) => {
   switch (type) {
     case "ADD_USER":
+      console.log("Add state",state);
       return {
         ...state,
-        users: [...state.users, payload],
+        users: [...state.users, {id:state.users.length+1,...payload}],
       };
     case "REMOVE_USER":
-      break;
-
-    case "EDIT_USER":
-      const { id } = payload;
-      const updatedUserData = state.user.map((curr, index) =>
-        index + 1 === id ? payload.updateduser : curr
-      );
+      const filteredData=state.users.filter(user=>user.id!==payload)
       return {
         ...state,
-        users: updatedUserData,
+        users:filteredData
+      }
+
+    case "EDIT_USER":
+    const allUpdated=state.users.map(user=>user.id===payload.id ? payload :user) 
+      return {
+        ...state,
+        users: allUpdated,
       };
 
     default:

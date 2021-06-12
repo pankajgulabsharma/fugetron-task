@@ -24,7 +24,7 @@ const useStyle = makeStyles({
     marginLeft: "10px",
   },
 });
-const Table = ({ headerData, bodyData, setDialogOpen }) => {
+const Table = ({ headerData, bodyData, setOpen, setId }) => {
   const classes = useStyle();
   return (
     <TableContainer>
@@ -41,11 +41,11 @@ const Table = ({ headerData, bodyData, setDialogOpen }) => {
         <TableBody>
           {bodyData.map(
             (
-              { firstName, lastName, email, selectState, city, pincode },
+              { id, firstName, lastName, email, selectState, city, pincode },
               index
             ) => (
               <TableRow key={index}>
-                <TableCell className={classes.body}>{index + 1}</TableCell>
+                <TableCell className={classes.body}>{id}</TableCell>
                 <TableCell className={classes.body}>{firstName}</TableCell>
                 <TableCell className={classes.body}>{lastName}</TableCell>
                 <TableCell className={classes.body}>{email}</TableCell>
@@ -55,7 +55,7 @@ const Table = ({ headerData, bodyData, setDialogOpen }) => {
                 <TableCell className={classes.body}>
                   <NavLink
                     exact
-                    to={`/editrecord/${index + 1}`}
+                    to={`/editrecord/${id}`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -71,7 +71,10 @@ const Table = ({ headerData, bodyData, setDialogOpen }) => {
                     variant="contained"
                     color="secondary"
                     className={classes.button}
-                    onClick={() => setDialogOpen(true)}
+                    onClick={() => {
+                      setOpen(true);
+                      setId(id);
+                    }}
                   >
                     DELETE
                   </Button>

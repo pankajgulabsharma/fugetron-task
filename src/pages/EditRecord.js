@@ -49,10 +49,10 @@ const EditRecord = () => {
 
   useEffect(() => {
     console.log(`users`, users);
-    const selectedUser = users.find((user, index) => id === index + 1);
+    const selectedUser = users.find((user, index) => user.id === parseInt(id));
     setState(selectedUser);
     console.log("selectdUser", id, selectedUser);
-  }, [users, id]);
+  }, [id]);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -62,7 +62,9 @@ const EditRecord = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validation()) {
-      editUser(state, id);
+      // console.log("Edit id",id);
+      // console.log("Edit state",state);
+      editUser(state);
       console.log("sucess");
       history.push("/");
     }
@@ -73,7 +75,7 @@ const EditRecord = () => {
 
     //pincode validation
     temp.pincode =
-      state.pincode.trim() === ""
+      state.pincode === ""
         ? "Pincode is required"
         : state.pincode.length < 6
         ? ""

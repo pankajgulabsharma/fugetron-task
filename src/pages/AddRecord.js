@@ -41,8 +41,10 @@ const initialState = {
   pincode: "",
 };
 const AddRecord = () => {
+  
   const [state, setState] = useState(initialState);
   const [error, setError] = useState({});
+  // const [dynamicId,setDynamicId]=useState(0)
 
   const { addUser } = useContext(GlobalContext);
   let history = useHistory();
@@ -56,6 +58,7 @@ const AddRecord = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validation()) {
+      // setDynamicId(prev=>prev+1)
       addUser(state);
       // console.log("sucess");
       history.push("/");

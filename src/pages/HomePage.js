@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo, useEffect } from "react";
 import Table from "../components/Table.js";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -13,6 +13,7 @@ import AddIcon from "@material-ui/icons/Add";
 import SearchIcon from "@material-ui/icons/Search";
 import { NavLink } from "react-router-dom";
 import { GlobalContext } from "../context/GlobalState.js";
+import DialogBox from "../components/DialogBox.js";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -57,29 +58,79 @@ const header = [
   "Action",
 ];
 const HomePage = () => {
-  const { users } = useContext(GlobalContext);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const { users, removeUser } = useContext(GlobalContext);
+  // const [dialogOpen, setDialogOpen] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState(null);
+  const [name, setName] = useState("Deleted");
+  const [search, setSearch] = useState("");
+  const [searchData, setSearchData] = useState([]);
+
+  useEffect(() => {
+    const deletedUserName = users.filter((user) => user.id === id)[0];
+    setName(deletedUserName?.firstName);
+  }, [id]);
+
+  // console.log(users);
   // console.log(dialogOpen);
+  // const findNamefun = () => users.filter((user) => user.id === dialogOpen);
+  // console.log(`findNamefun`, findNamefun());
+  // const findName = findNamefun();
+  // console.log("findName", findName[0].firstName);
+  // const memoizedValue = useMemo(
+  //   () => users[dialogOpen].firstName,
+  //   [dialogOpen]
+  // );
+  // console.log(memoizedValue);
 
-  const DialogBox = (
-    <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-      <DialogTitle>{"Are You Sure to Delete"}</DialogTitle>
+  // const DialogBox = () => (
+  //   <Dialog
+  //     open={Boolean(dialogOpen)}
+  //     onClose={() => setDialogOpen(Boolean(0))}
+  //   >
+  //     <DialogTitle>{`Are You Sure to Delete ${dialogOpen}`}</DialogTitle>
 
-      <DialogActions>
-        <Button
-          variant="contained"
-          color="secondary"
-          // type="submit"
-          // className={classes.button}
-        >
-          Delete
-        </Button>
-        <Button variant="contained" color="primary">
-          Cancel
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+  //     <DialogActions>
+  //       <Button
+  //         variant="contained"
+  //         color="secondary"
+  //         onClick={() => {
+  //           setDialogOpen(Boolean(0));
+  //           removeUser(dialogOpen);
+  //         }}
+  //       >
+  //         Delete
+  //       </Button>
+  //       <Button
+  //         variant="contained"
+  //         color="primary"
+  //         onClick={() => setDialogOpen(Boolean(0))}
+  //       >
+  //         Cancel
+  //       </Button>
+  //     </DialogActions>
+  //   </Dialog>
+  // );
+
+  const handleSearch = (e) => {
+    console.log(`search`, search);
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    if (search) {
+      const filterData = users.filter(
+        (user) =>
+          user.firstName.toLowerCase().includes(search.toLowerCase()) ||
+          user.lastName.toLowerCase().includes(search.toLowerCase()) ||
+          user.email.toLowerCase().includes(search.toLowerCase()) ||
+          user.selectState.toLowerCase().includes(search.toLowerCase()) ||
+          user.city.toLowerCase().includes(search.toLowerCase()) ||
+          user.pincode.includes(search)
+      );
+      setSearchData(filterData);
+    }
+  }, [search]);
   const classes = useStyle();
   return (
     <div className={classes.root}>
@@ -94,21 +145,29 @@ const HomePage = () => {
             <SearchIcon />
           </div>
           <InputBase
+            name={search}
             placeholder="Search…"
             classes={{
               root: classes.inputRoot,
               input: classes.inputInput,
             }}
             inputProps={{ "aria-label": "search" }}
+            onChange={(e) => handleSearch(e)}
           />
         </div>
       </Toolbar>
       <Table
         headerData={header}
-        bodyData={users}
-        setDialogOpen={setDialogOpen}
+        bodyData={search.length > 0 ? searchData : users}
+        setOpen={setOpen}
+        setId={setId}
       />
-      {DialogBox}
+      <DialogBox
+        title={`Are You Sure to Delete ${name}`}
+        open={open}
+        setOpen={setOpen}
+        action={() => removeUser(id)}
+      />
     </div>
   );
 };
