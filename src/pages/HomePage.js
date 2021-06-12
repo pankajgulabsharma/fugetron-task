@@ -71,47 +71,6 @@ const HomePage = () => {
     setName(deletedUserName?.firstName);
   }, [id]);
 
-  // console.log(users);
-  // console.log(dialogOpen);
-  // const findNamefun = () => users.filter((user) => user.id === dialogOpen);
-  // console.log(`findNamefun`, findNamefun());
-  // const findName = findNamefun();
-  // console.log("findName", findName[0].firstName);
-  // const memoizedValue = useMemo(
-  //   () => users[dialogOpen].firstName,
-  //   [dialogOpen]
-  // );
-  // console.log(memoizedValue);
-
-  // const DialogBox = () => (
-  //   <Dialog
-  //     open={Boolean(dialogOpen)}
-  //     onClose={() => setDialogOpen(Boolean(0))}
-  //   >
-  //     <DialogTitle>{`Are You Sure to Delete ${dialogOpen}`}</DialogTitle>
-
-  //     <DialogActions>
-  //       <Button
-  //         variant="contained"
-  //         color="secondary"
-  //         onClick={() => {
-  //           setDialogOpen(Boolean(0));
-  //           removeUser(dialogOpen);
-  //         }}
-  //       >
-  //         Delete
-  //       </Button>
-  //       <Button
-  //         variant="contained"
-  //         color="primary"
-  //         onClick={() => setDialogOpen(Boolean(0))}
-  //       >
-  //         Cancel
-  //       </Button>
-  //     </DialogActions>
-  //   </Dialog>
-  // );
-
   const handleSearch = (e) => {
     console.log(`search`, search);
     setSearch(e.target.value);
