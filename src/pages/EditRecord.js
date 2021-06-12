@@ -41,18 +41,20 @@ const initialState = {
 };
 const EditRecord = () => {
   const { users, editUser } = useContext(GlobalContext);
+
   const [state, setState] = useState(initialState);
   const [error, setError] = useState({});
+
   let history = useHistory();
   const { id } = useParams();
   // console.log(state);
 
   useEffect(() => {
     console.log(`users`, users);
-    const selectedUser = users.find((user, index) => user.id === parseInt(id));
-    setState(selectedUser);
+    const selectedUser = users.find((user, index) => id == index + 1);
     console.log("selectdUser", id, selectedUser);
-  }, [id]);
+    setState(selectedUser);
+  }, [users, id]);
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
