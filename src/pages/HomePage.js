@@ -117,6 +117,7 @@ const HomePage = () => {
     setSearch(e.target.value);
   };
 
+  //here we are using useEffect because  as we know that setState(hook of react) is asynchronous in nature that makes delay
   useEffect(() => {
     if (search) {
       const filterData = users.filter(
