@@ -126,11 +126,12 @@ const HomePage = () => {
           user.email.toLowerCase().includes(search.toLowerCase()) ||
           user.selectState.toLowerCase().includes(search.toLowerCase()) ||
           user.city.toLowerCase().includes(search.toLowerCase()) ||
-          user.pincode.includes(search)
+          user.pincode.toString().includes(search.toString)
       );
       setSearchData(filterData);
     }
   }, [search]);
+
   const classes = useStyle();
   return (
     <div className={classes.root}>
